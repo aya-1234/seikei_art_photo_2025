@@ -1,0 +1,248 @@
+header {
+  display: flex; /* フレックスボックスを使用 */
+  align-items: center; /* 垂直方向中央揃え */
+  justify-content: space-between; /* 要素を両端に配置 */
+  padding: 10px; /* パディングを追加 */
+}
+
+.back-link {
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  display: inline-block; /* 必要に応じて */
+}
+
+.social-links {
+  display: flex; /* ソーシャルリンクを横に並べる */
+  gap: 10px; /* リンク間にスペースを追加 */
+}
+
+.social-links a {
+  /* リンクのスタイル */
+  display: inline-flex; /* 画像を中央に配置するために必要 */
+  align-items: center;
+}
+
+.image-container {
+  display: flex;
+  align-items: flex-start; /* または align-items: center; など */
+}
+
+.image-container img.page-top {
+  /* 必要に応じて追加のスタイル */
+  float: left;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  background-color: #f2f2f2;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 5px;
+}
+
+li a {
+  /* リンクのスタイルをliではなくaに適用 */
+  display: block; /* aタグ全体をクリック可能にする */
+  padding: 10px 20px;
+  background-color: #a0abb9;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none; /* デフォルトのリンク下線を消す */
+}
+
+li a:hover {
+  background-color: #5e6368;
+}
+
+li a:active {
+  background-color: #627071;
+}
+
+.author_list {
+  padding: 10px 0; /* 上下のみパディング */
+  border-top: 1px solid #eee; /* 薄いグレーの境界線 */
+  text-align: center;
+}
+
+.author_list h3 {
+  font-size: 1em; /* デフォルトのフォントサイズ */
+  margin-bottom: 5px;
+  font-weight: normal; /* 太字を解除 */
+}
+
+.author_list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.author_list li {
+  margin: 5px;
+}
+
+.author_list a {
+  display: inline-block;
+  padding: 5px 10px; /* パディングを小さく */
+  color: #333; /* ダークグレーのテキスト */
+  text-decoration: none;
+  border: 1px solid #ccc; /* 薄いグレーの境界線 */
+  border-radius: 3px; /* 少し角を丸める */
+}
+
+.author_list a:hover {
+  background-color: #f0f0f0; /* 非常に薄いグレーの背景 */
+}
+
+.link-button {
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 10px; /* ボタン間の余白 */
+  text-decoration: none; /* デフォルトのリンク下線を消す */
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+  .flex-container {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) {
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+/* ... 既存のCSS ... */
+
+/* スマホ向け調整 */
+@media (max-width: 767px) {
+  /* ブレイクポイントを767pxに変更 */
+  .container {
+    width: 95%; /* 画面いっぱいに広げすぎない */
+    padding: 10px;
+  }
+
+  .flex-container {
+    flex-direction: column; /* 縦並び */
+  }
+
+  li a {
+    padding: 15px; /* タップしやすくするためにパディングを広げる */
+    font-size: 16px; /* フォントサイズを少し大きく */
+  }
+
+  .link-button {
+    display: block; /* ボタンをブロック要素にして縦並び */
+    margin: 10px auto; /* 上下マージンを追加、左右中央寄せ */
+    width: 90%; /* ボタンの幅を調整 */
+  }
+
+  h1 {
+    font-size: 20px; /* 見出しのサイズを調整 */
+  }
+
+  table {
+    font-size: 14px; /* 表のフォントサイズを調整 */
+  }
+}
+
+/* style.css */
+.author-info {
+  display: flex;
+  align-items: center; /* 垂直方向の中央揃え */
+}
+
+.author-info img {
+  margin-left: 10px; /* 画像とリンクの間の余白 */
+}
+footer {
+  background-color: #f0f0f0; /* 背景色 */
+  padding: 20px;
+  text-align: center; /* 中央寄せ */
+}
+.footer-top {
+  display: flex;
+  justify-content: space-around; /* 大学名とInstagramアイコンを両端に配置 */
+  margin-bottom: 20px;
+}
+.university-logo {
+  height: 30px; /* ロゴのサイズ調整 */
+  vertical-align: middle;
+}
+.instagram-icon {
+  height: 30px; /* アイコンのサイズ調整 */
+  vertical-align: middle;
+}
+.floor-map img {
+  max-width: 100%; /* 間取り図のサイズ調整 */
+  height: auto;
+}
+.footer-links {
+  margin-bottom: 20px;
+}
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #444; /* ボタンの色 */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap; /* ボタンが横に並ばない場合は改行 */
+  justify-content: center; /* ボタンを中央寄せ */
+}
+.copyright {
+  font-size: smaller;
+  margin-top: 20px;
+}

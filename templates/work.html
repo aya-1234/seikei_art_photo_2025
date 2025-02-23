@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <title>{{ work.title }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <a
+      href="{{ url_for('index') }}"
+      style="
+        font-size: 18px;
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+        display: inline-block;
+      "
+      >戻る</a
+    >
+
+    <h2>{{ work.title }}</h2>
+    <p>作者: {{ author_name }}</p>
+    <img
+      src="{{ url_for('static', filename=work.image) }}"
+      alt="{{ work.title }}"
+    />
+    <br /><br />{{work.caption}}
+  </body>
+</html>

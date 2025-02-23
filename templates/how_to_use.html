@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <a
+        href="{{ url_for('index') }}"
+        style="
+          font-size: 18px;
+          border: 1px solid black;
+          padding: 8px;
+          text-align: center;
+          display: inline-block;
+        "
+        >戻る</a
+      >
+    </header>
+
+    <h1>使い方ガイド</h1>
+    <h2>
+      このサイトは成果物展のキャプションや、お便りを送ることができるフォームです
+    </h2>
+    <h3>これは大阪成蹊大学美術・写真部の成果物展の案内ページです。</h3>
+    <ul>
+      <li style="display: flex; align-items: center">
+        <p style="margin-right: auto">
+          まず、<ins>大学名</ins>と<ins>ロゴ</ins>のInstagramのアイコンが表示されています。<br />この二つを押すと大学ホームページと美術写真部のInstagramアカウントに飛びます。<br /><br />
+          展示会場の簡単な間取り図が示され、<ins>作品を作った作者</ins>がわかります。<br /><br />
+          <ins>「使い方ページ」</ins
+          >と<ins>「お便りを送る」</ins>へのボタンがあります。<ins>「使い方ページ」</ins>はこのページに移動します。<ins>「お便りを送る」</ins>ボタンはGoogleフォームへのリンクになっています。<br /><br />
+          <ins>「作者番号」</ins
+          >という見出しの下に、作者の名前が<ins>ボタン状</ins>に表示されています。各作者の作品詳細ページへのリンクにつながます。そして、作品のタイトルやキャプションを見ることができます。
+        </p>
+        <br /><br />
+        <img
+          src="{{ url_for('static', filename='images/page-top.png') }}"
+          width="50%"
+          alt="page-top"
+        />
+      </li>
+    </ul>
+  </body>
+</html>
