@@ -13,13 +13,12 @@
     <header>
       <div class="social-links">
         <a
-        href="https://univ.osaka-seikei.jp/"
-        target="_blank"
-        class="instagram-link"
-      >
-        <img
+          href="https://univ.osaka-seikei.jp/"
+          target="_blank"
+          class="instagram-link"
+        >
+          <img
             src="{{ url_for('static', filename='images/header_univ-logo.png') }}"
-            width="flex"
             alt="大阪成蹊大学美術写真部Instagram"
           />
         </a>
@@ -34,21 +33,20 @@
             alt="大阪成蹊大学美術写真部Instagram"
           />
         </a>
+      </div>
     </header>
 
-    <img
-      src="{{ url_for('static', filename='images/dm.jpg') }}"
-      width="flex"
-      alt="dm"
-    />
+    <img src="{{ url_for('static', filename='images/dm.jpg') }}" alt="dm" />
     <img
       src="{{ url_for('static', filename='images/map.png') }}"
-      width="flex"
       alt="マップ"
     />
+
     <main>
       <nav>
-        <a class="link-button" href="{{url_for('how_to_use')}}">使い方ページ</a>
+        <a class="link-button" href="{{ url_for('how_to_use') }}"
+          >使い方ページ</a
+        >
         <a
           class="link-button send-message-button"
           href="https://forms.gle/Msppvif1DCoguGmC8"
@@ -56,33 +54,57 @@
           >お便りを送る</a
         >
 
-        <div class = "author_list">
+        <div class="author_list">
           <h1>作者番号</h1>
-            <ul>
-              {% for author in authors %}
-              <li>
-                <a href="{{ url_for('author', author_name=author) }}"
-                  >{{ author }}</a
-                >
-              </li>
-              {% endfor %}
-            </ul>
+          <ul>
+            {% for author in authors %}
+            <li>
+              <a href="{{ url_for('author', author_name=author) }}"
+                >{{ author }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <!-- author_list divを閉じる -->
       </nav>
     </main>
 
     <footer>
       <!-- フッターの内容 -->
       <div class="footer-top">
-        <a href="https://univ.osaka-seikei.jp/" target="_blank" rel="noopener noreferrer">
-          <img src="{{ url_for('static', filename='images/header_univ-logo.png') }}" alt="大学名ロゴ" class="university-logo">
+        <a
+          href="https://univ.osaka-seikei.jp/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="{{ url_for('static', filename='images/header_univ-logo.png') }}"
+            alt="大学名ロゴ"
+            class="university-logo"
+          />
         </a>
-        <a href="https://www.instagram.com/osg_club_art.photo?igsh=YmljdWN0cW8zemh2&utm_source=qr" target="_blank" rel="noopener noreferrer">
-          <img src="{{ url_for('static', filename='images/header_Instagram.png') }}" alt="Instagram" class="instagram-icon">
+        <a
+          href="https://www.instagram.com/osg_club_art.photo?igsh=YmljdWN0cW8zemh2&utm_source=qr"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="{{ url_for('static', filename='images/header_Instagram.png') }}"
+            alt="Instagram"
+            class="instagram-icon"
+          />
         </a>
       </div>
       <div class="footer-links">
-        <a href="{{url_for('how_to_use')}}" class="button">使い方ページ</a>
-        <a href="https://forms.gle/Msppvif1DCoguGmC8" target="_blank" rel="noopener noreferrer" class="button">お便りを送る</a>
+        <a href="{{ url_for('how_to_use') }}" class="button">使い方ページ</a>
+        <a
+          href="https://forms.gle/Msppvif1DCoguGmC8"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button"
+          >お便りを送る</a
+        >
       </div>
       <div class="copyright">
         <p>© 2025 大阪成蹊大学美術・写真部</p>

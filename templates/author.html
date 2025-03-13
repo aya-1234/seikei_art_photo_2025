@@ -1,45 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ author_name }} の作品</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
   </head>
+  <header>
+    <div class="author-info">
+      {% if author.instagram_url %}
+      <a
+        href="{{ author.instagram_url }}"
+        target="_blank"
+        class="instagram-link"
+        aria-label="{{ author_name }}さんのInstagram"
+      >
+        <img
+          src="{{ url_for('static', filename='images/header_Instagram.png') }}"
+          width="50"
+          alt="{{ author_name }}さんのInstagram"
+        />
+      </a>
+      {% endif %} {% if author.twitter_url %}
+      <a
+        href="{{ author.twitter_url }}"
+        target="_blank"
+        class="twitter-link"
+        aria-label="{{ author_name }}さんのTwitter"
+      >
+        <img
+          src="{{ url_for('static', filename='images/header_x-logo-black.png') }}"
+          width="50"
+          alt="{{ author_name }}さんのInstagram"
+        />
+      </a>
+      {% endif %}
+    </div>
+    <a class="emphasized-link" href="{{ url_for('index') }}">ホームに戻る</a>
+  </header>
   <body>
-    <header>
-      <a href="{{ url_for('index') }}" class="back-link">戻る</a> 
-        <div class="social-links">
-            {% if instagram_url %}
-                <a href="{{ instagram_url }}" target="_blank" class="instagram-link">
-                    <img src="{{ url_for('static', filename='images/header_Instagram.png') }}" width="50" alt="{{ author_name }} の Instagram">
-                </a>
-            {% endif %}
-            {% if twitter_url %}
-                <a href="{{ twitter_url }}" target="_blank" class="twitter-link">
-                    <img src="{{ url_for('static', filename='images/header_x-logo-black.png') }}" width="50" alt="{{ author_name }} の X(旧Twitter)">
-                </a>
-            {% endif %}
-        </div>
-      </div>
-    </header>
     <h1>{{ author_name }} の作品</h1>
 
     <ul>
       {% for work in works %}
       <li>
         <img
-          src="{{ url_for('static', filename=work.image) }}"
-          alt="{{ work.title }}"
+          src="{{ url_for('static', filename='' + work[1]) }}"
+          alt="{{ work[0] }}"
           width="200"
         />
         <a
+          class="emphasized-link"
           href="{{ url_for('work', author_name=author_name, work_index=loop.index0) }}"
+          aria-label="{{ work[0] }}の詳細"
         >
-          {{ work.title }}
+          {{ work[0] }}
         </a>
       </li>
       {% endfor %}
