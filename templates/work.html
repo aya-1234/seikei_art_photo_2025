@@ -3,26 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ work.title }}</title>
+    <title>{{ work['title'] }}</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
   </head>
-  <body>
-    <h2>{{ work.title }}</h2>
-    <img
-      src="{{ url_for('static', filename=work.image) }}"
-      alt="{{ work.title }}"
-      width="400"
-    />
-    <p>{{ work.caption }}</p>
-
+  <header>
+    <!-- Instagramなどの作家のリンク情報があれば表示 -->
+    <div class="author-info">
+      {% if author['instagram_url'] %}
+      <a
+        href="{{ author['instagram_url'] }}"
+        target="_blank"
+        class="instagram-link"
+        aria-label="{{ author['name'] }}さんのInstagram"
+      >
+        <img
+          src="{{ url_for('static', filename='images/header_Instagram.png') }}"
+          width="50"
+          alt="{{ author['name'] }}さんのInstagram"
+        />
+      </a>
+      {% endif %} {% if author['twitter_url'] %}
+      <a
+        href="{{ author['twitter_url'] }}"
+        target="_blank"
+        class="twitter-link"
+        aria-label="{{ author['name'] }}さんのTwitter"
+      >
+        <img
+          src="{{ url_for('static', filename='images/header_x-logo-black.png') }}"
+          width="50"
+          alt="{{ author['name'] }}さんのTwitter"
+        />
+      </a>
+      {% endif %}
+    </div>
     <a
       class="emphasized-link"
-      href="{{ url_for('author', author_name=author_name) }}"
-      >作家のページに戻る</a
+      href="{{ url_for('author', author_name=author['name']) }}"
     >
-    <a class="emphasized-link" href="{{ url_for('index') }}">ホームに戻る</a>
+      {{ author['name'] }}さんのページへ
+    </a>
+  </header>
+  <body>
+    <img
+      src="{{ url_for('static', filename=work['image']) }}"
+      alt="{{ work['title'] }}"
+    />
+    <!-- work.html の例 -->
+    <h1>{{ work['title'] }}</h1>
+    <p>{{ work['description'] }}</p>
+    <p>{{ work['caption'] }}</p>
+
+    <!-- 作家情報 -->
+    <p>作家: {{ author['name'] }}</p>
+    <script>
+      window.addEventListener('beforeunload', function (e) {
+        navigator.sendBeacon(
+          "{{ url_for('log_exit', author_name=author['name'], work_id=work['id']) }}",
+          {}
+        );
+      });
+    </script>
   </body>
 </html>

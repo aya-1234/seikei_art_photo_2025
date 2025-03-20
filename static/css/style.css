@@ -267,7 +267,7 @@ footer {
   margin-bottom: 10px;
 }
 .emphasized-link {
-  border: 1px solid black; /* 黒枠を追加 */
+  border: 2px solid black; /* 黒枠を追加 */
   padding: 5px; /* 必要に応じてパディングを追加 */
   text-decoration: none; /* デフォルトの下線を削除 */
   color: black; /* テキストの色を黒に設定 */
@@ -276,3 +276,27 @@ footer {
 .emphasized-link:hover {
   background-color: #f0f0f0; /* ホバー時の背景色 */
 }
+/* style.css */
+
+/* ... 他のスタイル ... */
+
+.emphasized-link {
+  display: block; /* ブロックレベル要素にする */
+  width: 100%; /* 親要素 (ここでは li) の幅いっぱいに広げる */
+  max-width: 50%; /* 最大幅を設定 (必要に応じて調整) */
+  margin: left; /* 左右中央揃え */
+  padding: 10px 15px; /* 上下左右に余白 */
+  background-color: #6c757d; /* 背景色 (グレー) */
+  color: #fff; /* 文字色 (白) */
+  text-align: center; /* テキストを中央揃え */
+  border-radius: 5px; /* 角を丸くする */
+  text-decoration: none; /* 下線を消す */
+  transition: background-color 0.3s ease; /* ホバー時の変化を滑らかに */
+  border: none; /* 枠線を消す */
+}
+
+.emphasized-link:hover {
+  background-color: #b0b8bf; /* ホバー時の背景色 (明るいグレー) */
+}
+
+/* レスポンシブ対応 (スマホ向け) */

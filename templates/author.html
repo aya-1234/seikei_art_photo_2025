@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ author_name }} の作品</title>
+    <title>{{ author['name'] }} の作品</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
@@ -34,7 +34,7 @@
         <img
           src="{{ url_for('static', filename='images/header_x-logo-black.png') }}"
           width="50"
-          alt="{{ author_name }}さんのInstagram"
+          alt="{{ author_name }}さんのTwitter"
         />
       </a>
       {% endif %}
@@ -42,25 +42,33 @@
     <a class="emphasized-link" href="{{ url_for('index') }}">ホームに戻る</a>
   </header>
   <body>
-    <h1>{{ author_name }} の作品</h1>
+    <h1>{{ author['name'] }} の作品</h1>
 
-    <ul>
+    <section class="works">
+      <!-- 作品リスト全体を section で囲む -->
       {% for work in works %}
-      <li>
-        <img
-          src="{{ url_for('static', filename='' + work[1]) }}"
-          alt="{{ work[0] }}"
-          width="200"
-        />
+      <figure class="work-item">
+        <!-- 各作品を figure で囲む -->
         <a
-          class="emphasized-link"
-          href="{{ url_for('work', author_name=author_name, work_index=loop.index0) }}"
-          aria-label="{{ work[0] }}の詳細"
+          href="{{ url_for('work_by_name_and_id', author_name=author.name, work_id=work.id) }}"
         >
-          {{ work[0] }}
+          <img
+            src="{{ url_for('static', filename=work.image) }}"
+            alt="{{ work.title }} - {{ author.name }}の作品"
+            width="200"
+          />
         </a>
-      </li>
+        <figcaption>
+          <a
+            class="emphasized-link"
+            href="{{ url_for('work_by_name_and_id', author_name=author.name, work_id=work.id) }}"
+            aria-label="{{ work.title }}の詳細"
+          >
+            {{ work.title }}
+          </a>
+        </figcaption>
+      </figure>
       {% endfor %}
-    </ul>
+    </section>
   </body>
 </html>

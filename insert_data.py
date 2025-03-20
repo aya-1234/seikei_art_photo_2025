@@ -1,12 +1,15 @@
 import sqlite3
 from models import DB_NAME
-
+from datetime import datetime
 # ここに authors のデータを入れる
 authors = {
     "内田絢汰": {
         "works": [
-            {"image": "images/aaa.jpg" , "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "images/irori-2025-1.jpg" , "title": "転", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
+            {"image": "images/irori-2025-2.jpg" , "title": "転", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
+            {"image": "images/irori-2025-3.jpg" , "title": "転", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
+            {"image": "images/irori-2025-4.jpg" , "title": "転", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
+            
         ],
         "instagram_url": "https://www.instagram.com/aya___cmr?igsh=MWl1YXY2eW50ejc0bQ%3D%3D&utm_source=qr",
         "twitter_url": "https://x.com/Aya7__Gaming",
@@ -22,9 +25,9 @@ authors = {
     "戸高花音": {
         "works": [
             {"image": "images/back_side.jpg", "title": "裏側まで", "caption": "デジタル"},
-            {"image": "images/cap1.jpg", "title": "", "caption": "Canon EOS kiss X9"},
-            {"image": "images/cap2.jpg", "title": "", "caption": "Canon EOS kiss X9"},
-            {"image": "images/cap3.jpg", "title": "", "caption": "Canon EOS kiss X9"},
+            {"image": "images/cap1.jpg", "title": "裏側まで", "caption": "Canon EOS kiss X9"},
+            {"image": "images/cap2.jpg", "title": "裏側まで", "caption": "Canon EOS kiss X9"},
+            {"image": "images/cap3.jpg", "title": "裏側まで", "caption": "Canon EOS kiss X9"},
         ],
         "instagram_url": "https://www.instagram.com/oozzz_u_u?igsh=NGc2ejRtMDAzaTV5&utm_source=qr",
     },
@@ -162,6 +165,64 @@ authors = {
     },
 }
 
+# 仮の訪問データ
+visitor_name = "仮の訪問者"
+author_name = "内田絢汰"
+tap_time = datetime.now()  # タップ時間（現在の時刻）
+visit_time = datetime.now()  # 訪問時間（現在の時刻）
+
+def create_tables():
+    # テーブルを作成
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    # authors テーブルの作成
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS authors (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        instagram_url TEXT,
+        twitter_url TEXT
+    );
+    """)
+
+    # works テーブルの作成
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS works (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        author_id INTEGER,
+        image TEXT NOT NULL,
+        title TEXT,
+        caption TEXT,
+        FOREIGN KEY (author_id) REFERENCES authors(id)
+    );
+    """)
+
+    # visitors テーブルの作成
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS visitors (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL
+    );
+    """)
+
+    # visits テーブルの作成
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS visits (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        visitor_id INTEGER,
+        author_id INTEGER,
+        tap_time DATETIME,
+        visit_time DATETIME,
+        stay_duration INTEGER,
+        FOREIGN KEY (visitor_id) REFERENCES visitors(id),
+        FOREIGN KEY (author_id) REFERENCES authors(id)
+    );
+    """)
+
+    conn.commit()
+    conn.close()
+
 def insert_data():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -193,6 +254,33 @@ def insert_data():
     conn.commit()
     conn.close()
 
+def insert_visits():
+    # 訪問者を visitors テーブルに追加
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO visitors (name) VALUES (?)', (visitor_name,))
+    conn.commit()
+
+    # visitor_id を取得
+    cursor.execute('SELECT id FROM visitors WHERE name = ?', (visitor_name,))
+    visitor_id = cursor.fetchone()[0]
+
+    # author_id を取得
+    cursor.execute('SELECT id FROM authors WHERE name = ?', (author_name,))
+    author_id = cursor.fetchone()[0]
+
+    # 訪問情報を visits テーブルに挿入
+    cursor.execute('''
+        INSERT INTO visits (visitor_id, author_id, tap_time, visit_time)  -- stay_duration を削除
+        VALUES (?, ?, ?, ?)  -- stay_duration に対応する ? を削除
+    ''', (visitor_id, author_id, tap_time, visit_time))  # stay_duration 変数を削除
+
+    conn.commit()
+    conn.close()
+
+# main関数
 if __name__ == "__main__":
-    insert_data()
+    create_tables()  # テーブルを作成
+    insert_data()  # 作家と作品情報をデータベースに挿入
+    insert_visits()  # 訪問情報をデータベースに挿入
     print("データを挿入しました！")

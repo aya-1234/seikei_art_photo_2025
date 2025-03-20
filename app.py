@@ -1,119 +1,321 @@
-import hashlib, sqlite3, urllib.parse
-from flask import Flask, render_template, url_for, abort, redirect
-from typing import List, Tuple, Dict, Optional
+from flask import Flask, render_template, request, redirect, url_for, session,jsonify
+import sqlite3
+from datetime import datetime, timedelta
+import logging
+import uuid
+import hashlib
+
 
 app = Flask(__name__)
-DB_NAME = "database.db"
+app.secret_key = 'your_secret_key'  # セッションを使用するための秘密鍵
 
-def get_db_connection() -> sqlite3.Connection:
-    conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row
-    return conn
+# ログ設定
+logging.basicConfig(filename='app.log', level=logging.ERROR)
 
-def get_author_by_name(author_name: str) -> Optional[sqlite3.Row]:
+
+author = {
+    "fasfdasfawfa": "author"
+}
+hash = author
+
+def get_author_visit_data():
+    """
+    作家ごとのタップ数と滞在時間を集計する
+    """
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM authors WHERE name = ?", (author_name,))
+    cursor.execute("""
+        SELECT 
+            a.name, 
+            COUNT(v.id) AS tap_count, 
+            SUM(strftime('%s', v.exit_time) - strftime('%s', v.tap_time)) AS total_duration
+        FROM authors a
+        LEFT JOIN visits v ON a.id = v.author_id
+        GROUP BY a.name
+        ORDER BY tap_count DESC;
+    """)
+    author_data = cursor.fetchall()
+    conn.close()
+    return author_data
+def get_detailed_visit_data():
+    """
+    詳細な訪問情報を取得する
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT
+            a.name,  -- 作家名
+            strftime('%H:%M:%S', v.tap_time) AS tap_time,  -- タップされた時間
+            v.visit_time,  -- 訪問日時
+            CASE WHEN v.exit_time IS NOT NULL THEN (strftime('%s', v.exit_time) - strftime('%s', v.tap_time)) ELSE 0 END AS duration  -- 滞在時間
+        FROM visits v
+        JOIN authors a ON v.author_id = a.id
+        ORDER BY v.visit_time DESC
+        LIMIT 100;  -- 取得するレコード数を制限 (パフォーマンス対策)
+    """)
+    visit_details = cursor.fetchall()
+    conn.close()
+    return visit_details
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row  # 辞書型でデータを取得
+    return conn
+
+# セッションからvisitor_idを取得、なければ新しく生成
+def get_visitor_id():
+    if 'visitor_id' not in session:
+        session['visitor_id'] = str(uuid.uuid4())  # 新しいUUIDを生成
+    return session['visitor_id']
+
+# 作家情報を取得
+def get_author_by_name(name):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM authors WHERE name = ?", (name,))
     author = cursor.fetchone()
     conn.close()
     return author
 
-def get_works_by_author(author_id: int) -> List[Tuple[str, str]]:
+# 作品詳細を取得
+def get_works_by_author(author_id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT title, image FROM works WHERE author_id = ?", (author_id,))
+    cursor.execute("SELECT id, title, image FROM works WHERE author_id = ?", (author_id,))
     works = cursor.fetchall()
     conn.close()
-    # 画像ファイル名をURLエンコード
-    works = [(work[0], urllib.parse.quote(work[1])) for work in works]
-    return works
 
-def get_data() -> Dict[str, Dict[str, any]]:
+    # works をディクショナリのリストに変換する
+    works_list = []
+    for work in works:
+        works_list.append({
+            'id': work[0],
+            'title': work[1],
+            'image': work[2]
+        })
+    return works_list
+
+def get_work_by_index(author_id, work_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM works WHERE author_id = ? AND id = ?", (author_id, work_id))
+    work = cursor.fetchone()
+    conn.close()
+    return work
+
+# 訪問記録をデータベースに保存
+def log_visit(visitor_id, author_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO visits (visitor_id, author_id, tap_time, visit_time, exit_time)
+            VALUES (?, ?, ?, ?, NULL)
+        ''', (visitor_id, author_id, datetime.now(), datetime.now()))
+        conn.commit()
+    except Exception as e:
+        logging.error(f"Error while logging visit: {e}")
+    finally:
+        conn.close()
+
+def insert_visits():
+    """
+    visitsテーブルに訪問記録を挿入する関数
+    visitor_idはセッションから取得し、author_idはauthor_nameから取得する
+    """
     conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row # これがないと、辞書形式でアクセスできない
     cursor = conn.cursor()
 
-    # authors と works を JOIN して取得
-    cursor.execute("""
-    SELECT authors.name, authors.instagram_url, authors.twitter_url, works.image, works.title, works.caption
-    FROM authors
-    JOIN works ON authors.id = works.author_id
-    """)
+    try:
+        # Flaskセッションからvisitor_idを取得
+        visitor_id = session.get('visitor_id')
+        if not visitor_id:
+            print("Error: visitor_id not found in session.")
+            return  # visitor_idがない場合は関数を終了
 
-    data = cursor.fetchall()
+        # author_nameからauthor_idを取得
+        cursor.execute('SELECT id FROM authors WHERE name = ?', (author_name,))
+        author_id_row = cursor.fetchone()
+
+        if author_id_row:
+            author_id = author_id_row[0]
+        else:
+            print(f"Error: author_id not found for author_name: {author_name}")
+            return  # author_idがない場合は関数を終了
+
+        # 訪問情報をvisitsテーブルに挿入
+        cursor.execute('''
+            INSERT INTO visits (visitor_id, author_id, tap_time, visit_time)
+            VALUES (?, ?, ?, ?)
+        ''', (visitor_id, author_id, tap_time, visit_time))
+
+        conn.commit()
+        print(f"Visit recorded for visitor_id: {visitor_id}, author_id: {author_id}")
+
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        conn.rollback()  # エラー発生時はロールバック
+
+    finally:
+        conn.close()
+        print("Database connection closed.")
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def get_author_visit_data():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT 
+            a.name, 
+            COUNT(v.id) AS tap_count, 
+            SUM(CASE WHEN v.exit_time IS NOT NULL THEN strftime('%s', v.exit_time) - strftime('%s', v.tap_time) ELSE 0 END) AS total_duration
+        FROM authors a
+        LEFT JOIN visits v ON a.id = v.author_id
+        GROUP BY a.name
+        ORDER BY tap_count DESC;
+    """)
+    author_data = cursor.fetchall()
+    conn.close()
+    return author_data
+
+def get_hourly_visit_counts(hours=24):
+    """
+    過去 `hours` 時間の時間ごとのアクセス数を取得する
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # 現在時刻から指定された時間前の時刻を計算
+    end_time = datetime.now()
+    start_time = end_time - timedelta(hours=hours)
+
+    cursor.execute("""
+        SELECT
+            strftime('%Y-%m-%d %H:00:00', tap_time) AS hour,
+            COUNT(*)
+        FROM visits
+        WHERE tap_time BETWEEN ? AND ?
+        GROUP BY hour
+        ORDER BY hour
+    """, (start_time, end_time))
+
+    hourly_counts = cursor.fetchall()
     conn.close()
 
-    # データを整理して返す（辞書形式）
-    authors_data = {}
-    for row in data:
-        author_name = row["name"]  # rowが辞書のようにアクセスできるようになりました
-        if author_name not in authors_data:
-            authors_data[author_name] = {
-                "instagram_url": row["instagram_url"],
-                "twitter_url": row["twitter_url"],
-                "works": []
-            }
-        authors_data[author_name]["works"].append({
-            "image": row["image"],
-            "title": row["title"],
-            "caption": row["caption"]
-        })
+    # 結果を辞書形式に変換 (例: {'2023-10-27 10:00:00': 10, '2023-10-27 11:00:00': 5, ...})
+    return {row['hour']: row[1] for row in hourly_counts}
 
-    return authors_data
+
+
+
+#admin用ページ
+@app.route("/aDm1n")
+def admin():
+    author_visit_data = get_author_visit_data()
+
+    # グラフ用のデータを作成
+    labels_author = [data[0] for data in author_visit_data]
+    tap_counts = [data[1] for data in author_visit_data]
+    durations = [data[2] for data in author_visit_data]
+
+    # 時間別アクセス数
+    hourly_counts = get_hourly_visit_counts()
+    labels_hourly = list(hourly_counts.keys())
+    data_hourly = list(hourly_counts.values())
+
+    return render_template(
+        "admin.html",
+        labels_author=labels_author,
+        tap_counts=tap_counts,
+        durations=durations,
+        labels_hourly=labels_hourly,
+        data_hourly=data_hourly
+    )
+
+@app.route("/log_exit/<author_name>/<int:work_id>", methods=['POST'])
+def log_exit(author_name, work_id):
+    visitor_id = get_visitor_id()
+    author = get_author_by_name(author_name)
+
+    if not author:
+        return "Author not found", 404
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE visits
+            SET exit_time = ?
+            WHERE visitor_id = ? AND author_id = ? AND exit_time IS NULL
+        ''', (datetime.now(), visitor_id, author["id"]))
+        conn.commit()
+    except Exception as e:
+        logging.error(f"Error while logging exit: {e}")
+    finally:
+        conn.close()
+
+    return redirect(url_for('author', author_name=author_name))
+
+# ルート: 作家一覧ページ
 @app.route("/")
 def index():
-    authors_data = get_data()
-    author_names = list(authors_data.keys())  # 作者名のリストを作成
-    return render_template("index.html", authors=author_names)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM authors")
+    authors = [row["name"] for row in cursor.fetchall()]
+    conn.close()
+    return render_template("index.html", authors=authors)
+# 作家詳細ページ
 
-@app.route("/how_to_use")
-def how_to_use():
-    return render_template("how_to_use.html")
+# 作家名をSHA256でハッシュ化し、作家詳細ページにリダイレクト
 
+
+# 作家詳細ページ (ハッシュ値を元に作家情報を取得)
 @app.route("/author/<author_name>")
-def author(author_name):
-    # 作家情報をデータベースから取得
-    author = get_author_by_name(author_name)
-    if author:
-        author_id = author[0]  # IDは最初のカラムと仮定
-        works = get_works_by_author(author_id)
-        # authorオブジェクトもテンプレートに渡す
-        return render_template("author.html", author=author, author_name=author_name, works=works)
-    else:
-        return f"作家 '{author_name}' は見つかりませんでした。", 404
-
-@app.route("/work/<author_name>/<int:work_index>")
-def work(author_name, work_index):
-    conn = sqlite3.connect(DB_NAME)
+def author(author_name):  # パラメータ名を author_name に修正
+    conn = get_db_connection()
     cursor = conn.cursor()
 
-    # 作者のIDを取得
-    cursor.execute("SELECT id FROM authors WHERE name = ?", (author_name,))
-    author_id = cursor.fetchone()
+    # 作家データを取得 (データベースでフィルタリング)
+    author_data = get_author_by_name(author_name)
+    if not author_data:
+        conn.close()  # get_author_by_name の中で close しているが、念のため
+        return f"作家 '{author_name}' は見つかりませんでした。", 404
 
-    if author_id:
-        author_id = author_id[0]
+    works = get_works_by_author(author_data["id"])  # 作品データ取得
+    conn.close() #明示的にclose
+    return render_template("author.html", author=author_data, works=works)
 
-        # 作品情報を取得
-        cursor.execute("""
-        SELECT image, title, caption FROM works WHERE author_id = ? LIMIT 1 OFFSET ?
-        """, (author_id, work_index))
-        work_info = cursor.fetchone()
+# 作家名と作品IDを使って作品詳細ページを表示する
+@app.route("/work/<author_name>/<int:work_id>")
+def work_by_name_and_id(author_name, work_id):
+    visitor_id = get_visitor_id()
 
-        if work_info:
-            image, title, caption = work_info
-            conn.close()
-            return render_template("work.html", author_name=author_name, work={"image": image, "title": title, "caption": caption})
-    conn.close()
-    abort(404)
+    # 作家情報を取得
+    author = get_author_by_name(author_name)
+    if not author:
+        return "作家が見つかりませんでした", 404
 
+    # 作品情報を取得
+    work = get_work_by_index(author["id"], work_id)
+    if not work:
+        return "作品が見つかりませんでした", 404
 
-# 作品ページへのリダイレクトを追加
-@app.route("/work_redirect/<author_name>/<int:work_index>")  # 旧URLからのリダイレクト用
-def redirect_work(author_name, work_index):
-    # work_index をハッシュ化
-    work_id = hashlib.md5(str(work_index).encode()).hexdigest()[:4]  # 短縮化
-    return redirect(url_for('work', author_name=author_name, work_index=work_index))
+    # 訪問記録を挿入
+    log_visit(visitor_id, author["id"])
+
+    # work.html に必要な情報を渡す
+    return render_template("work.html", author=author, work=work)
+
+@app.route('/how_to_use')
+def how_to_use():
+    return render_template('how_to_use.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>管理者画面</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>管理者画面</h1>
+      </header>
+
+      <section>
+        <h2>作家ごとのタップ数</h2>
+        <canvas id="tapCountChart" width="400" height="200"></canvas>
+      </section>
+
+      <section>
+        <h2>作品ごとの滞在時間</h2>
+        <canvas id="durationChart" width="400" height="200"></canvas>
+      </section>
+
+      <section>
+        <h2>過去24時間のアクセス数</h2>
+        <canvas id="hourlyVisitsChart" width="400" height="200"></canvas>
+      </section>
+    </div>
+
+    <script>
+      // タップ数グラフ
+      const tapCountCtx = document.getElementById("tapCountChart").getContext("2d");
+      const tapCountChart = new Chart(tapCountCtx, {
+        type: "bar",
+        data: {
+          labels: {{ labels_author | safe }},
+          datasets: [
+            {
+              label: "タップ数",
+              data: {{ tap_counts | safe }},
+              backgroundColor: "rgba(54, 162, 235, 0.5)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      // 滞在時間グラフ
+      const durationCtx = document.getElementById("durationChart").getContext("2d");
+      const durationChart = new Chart(durationCtx, {
+        type: "line",
+        data: {
+          labels: {{ labels_author | safe }},
+          datasets: [
+            {
+              label: "滞在時間（秒）",
+              data: {{ durations | safe }},
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      // 時間別アクセス数グラフ
+      const ctx = document.getElementById('hourlyVisitsChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: {{ labels_hourly | safe }},
+          datasets: [{
+            label: 'アクセス数',
+            data: {{ data_hourly | safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

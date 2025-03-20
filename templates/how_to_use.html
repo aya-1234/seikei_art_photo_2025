@@ -9,21 +9,20 @@
       href="{{ url_for('static', filename='css/style.css') }}"
     />
   </head>
+  <header>
+    <a
+      href="{{ url_for('index') }}"
+      style="
+        font-size: 18px;
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+        display: inline-block;
+      "
+      >ホームに戻る</a
+    >
+  </header>
   <body>
-    <header>
-      <a
-        href="{{ url_for('index') }}"
-        style="
-          font-size: 18px;
-          border: 1px solid black;
-          padding: 8px;
-          text-align: center;
-          display: inline-block;
-        "
-        >戻る</a
-      >
-    </header>
-
     <h1>使い方ガイド</h1>
     <h2>
       このサイトは成果物展のキャプションや、お便りを送ることができるフォームです
