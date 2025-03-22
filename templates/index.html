@@ -57,30 +57,17 @@
         <div class="author_list">
           <h1>作者名</h1>
           <main>
-            <section class="works">
-              {% for work in works %}
-              <figure class="work-item">
-                <a
-                  href="{{ url_for('work_by_name_and_id', author_name=author.name, work_id=work.id) }}"
+            {# index.html #}
+            <ul>
+              {% for author in authors %} {# authors リストの各要素を author
+              変数に代入 #}
+              <li>
+                <a href="{{ url_for('author', author_name=author) }}"
+                  >{{ author }}</a
                 >
-                  <img
-                    src="{{ url_for('static', filename=work.image) }}"
-                    alt="{{ work.title }} - {{ author.name }}の作品"
-                    style="max-width: auto; height: 100%;" 
-                  />
-                </a>
-                <figcaption>
-                  <a
-                    class="emphasized-link"
-                    href="{{ url_for('work_by_name_and_id', author_name=author.name, work_id=work.id) }}"
-                    aria-label="{{ work.title }}の詳細"
-                  >
-                    {{ work.title }}
-                  </a>
-                </figcaption>
-              </figure>
+              </li>
               {% endfor %}
-            </section>
+            </ul>
           </main>
         </div>
         <!-- author_list divを閉じる -->
