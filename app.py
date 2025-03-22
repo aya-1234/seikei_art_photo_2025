@@ -317,5 +317,5 @@ def how_to_use():
     return render_template('how_to_use.html')
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)
