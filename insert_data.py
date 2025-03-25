@@ -193,7 +193,6 @@ visitor_name = "仮の訪問者"
 author_name = "内田絢汰"
 tap_time = datetime.now()  # タップ時間（現在の時刻）
 visit_time = datetime.now()  # 訪問時間（現在の時刻）
-import sqlite3
 
 
 
@@ -325,5 +324,5 @@ def insert_visits(visitor_name, author_name, tap_time, visit_time, stay_duration
 if __name__ == "__main__":
     create_tables()  # テーブルを作成
     insert_data(authors)  # 作家と作品情報をデータベースに挿入
-    insert_visits()  # 訪問情報をデータベースに挿入
+    insert_visits(visitor_name, author_name, tap_time, visit_time)  # 訪問情報をデータベースに挿入
     print("データを挿入しました！")
