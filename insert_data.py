@@ -3,7 +3,7 @@ from models import DB_NAME
 from datetime import datetime
 # ここに authors のデータを入れる
 authors = {
-    "内田絢汰": {
+    "あや": {
         "works": [
             {"image": "images/irori-2025-1.jpg" , "title": "転", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
             {"image": "images/irori-2025-2.jpg" , "title": "転", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
@@ -12,12 +12,10 @@ authors = {
             
         ],
         "instagram_url": "https://www.instagram.com/aya___cmr?igsh=MWl1YXY2eW50ejc0bQ%3D%3D&utm_source=qr",
-        "twitter_url": "https://x.com/Aya7__Gaming",
     },
     "波多野ひなた": {
         "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "", "title": "東京都中野区中野５丁目５２−１５ B1", "caption": "画用紙 アクリルガッシュ"},
         ],
         "instagram_url": "https://www.instagram.com/ultra_happychan?igsh=bmhtZnN0M2hjNGVo&utm_source=qr",
         "twitter_url": "https://x.com/ultra_happychan?s=21&t=toYGO5301kXqijZqUquxQw",
@@ -95,18 +93,18 @@ authors = {
             {"image": "images/yellow.jpg", "title": "DRIPPING:YELLOW", "caption": "アクリル絵具"},
         ],
     },
-    "鍛治美羽": {
-        "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
-        ],
-    },
-    "西岡愛結": {
-        "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
-        ],
-    },
+    # "鍛治美羽": {
+    #     "works": [
+    #         {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
+    #         {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+    #     ],
+    # },
+    # "西岡愛結": {
+    #     "works": [
+    #         {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
+    #         {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+    #     ],
+    # },
     "梶田恵": {
         "works": [
             {"image": "images/lazy.jpeg", "title": "ぐうたらだらだら", "caption": "B4パネル、アクリル絵の具"},
@@ -128,10 +126,10 @@ authors = {
             {"image": "images/Angel.jpg", "title": "Angel", "caption": "水彩絵の具"},
         ],
     },
-    "杉本結望": {
+    "青之": {
         "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            # {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
+            # {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
         ],
         "twitter_url": "https://x.com/oAo_931",
     },
@@ -180,6 +178,12 @@ authors = {
     "りゅうのしん": {
         "works": [
             {"image": "images/kim.jpeg", "title": "KiM Presents 堀川武骨夜", "caption": "キャンバス、アクリルガッシュ"},
+        ],
+    },
+    "あや&青之": {
+        "works": [
+            {"image": "images/collaboration_photo.jpeg", "title": "実像", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
+            {"image": "images/collaboration_art.jpeg", "title": "虚像", "caption": ""},
         ],
     },
 }
