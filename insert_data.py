@@ -193,23 +193,25 @@ visitor_name = "仮の訪問者"
 author_name = "内田絢汰"
 tap_time = datetime.now()  # タップ時間（現在の時刻）
 visit_time = datetime.now()  # 訪問時間（現在の時刻）
+import sqlite3
+
+
 
 def create_tables():
-    # テーブルを作成
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    # authors テーブルの作成
+    # authors テーブル
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS authors (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        name TEXT NOT NULL UNIQUE,
         instagram_url TEXT,
         twitter_url TEXT
     );
     """)
 
-    # works テーブルの作成
+    # works テーブル
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS works (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -217,19 +219,19 @@ def create_tables():
         image TEXT NOT NULL,
         title TEXT,
         caption TEXT,
-        FOREIGN KEY (author_id) REFERENCES authors(id)
+        FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE
     );
     """)
 
-    # visitors テーブルの作成
+    # visitors テーブル
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS visitors (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
+        name TEXT NOT NULL UNIQUE
     );
     """)
 
-    # visits テーブルの作成
+    # visits テーブル
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS visits (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -238,19 +240,19 @@ def create_tables():
         tap_time DATETIME,
         visit_time DATETIME,
         stay_duration INTEGER,
-        FOREIGN KEY (visitor_id) REFERENCES visitors(id),
-        FOREIGN KEY (author_id) REFERENCES authors(id)
+        FOREIGN KEY (visitor_id) REFERENCES visitors(id) ON DELETE CASCADE,
+        FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE
     );
     """)
 
     conn.commit()
     conn.close()
 
-def insert_data():
+def insert_data(authors):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    # authors を追加
+    # authors データ挿入
     for name, data in authors.items():
         instagram_url = data.get("instagram_url", None)
         twitter_url = data.get("twitter_url", None)
@@ -262,13 +264,13 @@ def insert_data():
 
     conn.commit()
 
-    # works を追加
+    # works データ挿入
     for name, data in authors.items():
         cursor.execute("SELECT id FROM authors WHERE name = ?", (name,))
         author_id = cursor.fetchone()
         if author_id:
             author_id = author_id[0]
-            for work in data["works"]:
+            for work in data.get("works", []):  # KeyError を防ぐ
                 cursor.execute("""
                 INSERT INTO works (author_id, image, title, caption)
                 VALUES (?, ?, ?, ?)
@@ -277,29 +279,47 @@ def insert_data():
     conn.commit()
     conn.close()
 
-def insert_visits():
-    # 訪問者を visitors テーブルに追加
+def insert_visits(visitor_name, author_name, tap_time, visit_time, stay_duration=None):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO visitors (name) VALUES (?)', (visitor_name,))
-    conn.commit()
 
-    # visitor_id を取得
-    cursor.execute('SELECT id FROM visitors WHERE name = ?', (visitor_name,))
-    visitor_id = cursor.fetchone()[0]
+    try:
+        # visitors テーブルに追加（存在しない場合のみ）
+        cursor.execute('INSERT OR IGNORE INTO visitors (name) VALUES (?)', (visitor_name,))
+        conn.commit()
 
-    # author_id を取得
-    cursor.execute('SELECT id FROM authors WHERE name = ?', (author_name,))
-    author_id = cursor.fetchone()[0]
+        # visitor_id を取得
+        cursor.execute('SELECT id FROM visitors WHERE name = ?', (visitor_name,))
+        visitor_id = cursor.fetchone()
+        if visitor_id:
+            visitor_id = visitor_id[0]
+        else:
+            print("Visitor not found!")
+            return
 
-    # 訪問情報を visits テーブルに挿入
-    cursor.execute('''
-        INSERT INTO visits (visitor_id, author_id, tap_time, visit_time)  -- stay_duration を削除
-        VALUES (?, ?, ?, ?)  -- stay_duration に対応する ? を削除
-    ''', (visitor_id, author_id, tap_time, visit_time))  # stay_duration 変数を削除
+        # author_id を取得
+        cursor.execute('SELECT id FROM authors WHERE name = ?', (author_name,))
+        author_id = cursor.fetchone()
+        if author_id:
+            author_id = author_id[0]
+        else:
+            print("Author not found!")
+            return
 
-    conn.commit()
-    conn.close()
+        # visits テーブルに挿入
+        cursor.execute('''
+            INSERT INTO visits (visitor_id, author_id, tap_time, visit_time, stay_duration)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (visitor_id, author_id, tap_time, visit_time, stay_duration))
+
+        conn.commit()
+
+    except sqlite3.Error as e:
+        print("Database error:", e)
+
+    finally:
+        conn.close()
+
 
 # main関数
 if __name__ == "__main__":
