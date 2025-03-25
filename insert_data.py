@@ -73,7 +73,7 @@ authors = {
     "川島虹": {
         "works": [
             {"image": "images/gift.jpg", "title": "贈り物", "caption": "水彩、色鉛筆、マルチライナー"},
-            {"image": "images/Drying_sun", "title": "天日干し", "caption": "水彩、色鉛筆、マルチライナー"},
+            {"image": "images/Drying_sun.jpg", "title": "天日干し", "caption": "水彩、色鉛筆、マルチライナー"},
         ],
     },
     "北村明日香": {
@@ -128,8 +128,8 @@ authors = {
     },
     "青之": {
         "works": [
-            # {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            # {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "images/button.jpg", "title": "ボタン屋さん", "caption": "ここはキャプションです"},
+            #{"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
         ],
         "twitter_url": "https://x.com/oAo_931",
     },
@@ -162,10 +162,10 @@ authors = {
     },
     "遠藤胡桃": {
         "works": [
-            {"image": "images/ssaw1.jpg", "title": "春夏秋冬", "caption": "canon x80"},
+            {"image": "images/ssaw1.jpeg", "title": "春夏秋冬", "caption": "canon x80"},
             {"image": "images/ssaw2.jpg", "title": "春夏秋冬", "caption": "canon x80"},
-            {"image": "images/ssaw3.jpg", "title": "春夏秋冬", "caption": "canon x80"},
-            {"image": "images/ssaw4.jpg", "title": "春夏秋冬", "caption": "canon x80"},
+            {"image": "images/ssaw3.jpeg", "title": "春夏秋冬", "caption": "canon x80"},
+            {"image": "images/ssaw4.jpeg", "title": "春夏秋冬", "caption": "canon x80"},
             {"image": "images/memory.png", "title": "記憶", "caption": "ここはキャプションです"},
         ],
     },
@@ -182,8 +182,8 @@ authors = {
     },
     "あや&青之": {
         "works": [
-            {"image": "images/collaboration_photo.jpeg", "title": "実像", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
-            {"image": "images/collaboration_art.jpeg", "title": "虚像", "caption": ""},
+            {"image": "images/collaboration_photo.jpg", "title": "実像", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
+            {"image": "images/collaboration_art.jpg", "title": "虚像", "caption": ""},
         ],
     },
 }
