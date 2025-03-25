@@ -133,14 +133,14 @@ authors = {
         ],
         "twitter_url": "https://x.com/oAo_931",
     },
-    "五十嵐英奈": {
-        "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
-        ],
-        "instagram_url": "https://www.instagram.com/kaaaaro_33?igsh=MWRpeTlkdncxanYyNw%3D%3D&utm_source=qr",
-        "twitter_url": "https://x.com/c__krnp?s=21&t=2z1aHpbssmRHgpkBDv5-Xw",
-    },
+    # "五十嵐英奈": {
+    #     "works": [
+    #         {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
+    #         {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+    #     ],
+    #     "instagram_url": "https://www.instagram.com/kaaaaro_33?igsh=MWRpeTlkdncxanYyNw%3D%3D&utm_source=qr",
+    #     "twitter_url": "https://x.com/c__krnp?s=21&t=2z1aHpbssmRHgpkBDv5-Xw",
+    # },
     "波戸優希": {
         "works": [
             {"image": "", "title": "メ・チャ・ミエール", "caption": "Photoshop/Illustrator"},
@@ -171,8 +171,8 @@ authors = {
     },
     "中西祥": {
         "works": [
-            {"image": "images/castle.jpg", "title": "城", "caption": "フランス海岸松"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "images/castle.jpg", "title": "城&瓦解", "caption": "フランス海岸松"},
+            
         ],
     },
     "りゅうのしん": {
