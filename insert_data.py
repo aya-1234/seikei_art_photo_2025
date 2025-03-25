@@ -324,6 +324,6 @@ def insert_visits(visitor_name, author_name, tap_time, visit_time, stay_duration
 # main関数
 if __name__ == "__main__":
     create_tables()  # テーブルを作成
-    insert_data()  # 作家と作品情報をデータベースに挿入
+    insert_data(authors)  # 作家と作品情報をデータベースに挿入
     insert_visits()  # 訪問情報をデータベースに挿入
     print("データを挿入しました！")
