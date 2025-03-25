@@ -1,4 +1,4 @@
-#!/home/user/workspace/seikei_art_photo_2025/.venv/bin/python3
+#!/Users/pg/2025/intro_art_photo/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

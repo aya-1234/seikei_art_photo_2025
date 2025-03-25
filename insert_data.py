@@ -57,8 +57,8 @@ authors = {
     },
     "石川葵": {
         "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "images/eat.jpeg", "title": "たくさん食べたい", "caption": "キャンバス、アクリルガッシュ"},
+            {"image": "images/ster.jpeg", "title": "星たちのディスコ", "caption": "キャンバス、アクリルガッシュ"},
         ],
     },
     "三宅梨菜": {
@@ -75,6 +75,7 @@ authors = {
     "川島虹": {
         "works": [
             {"image": "images/gift.jpg", "title": "贈り物", "caption": "水彩、色鉛筆、マルチライナー"},
+            {"image": "images/Drying_sun", "title": "天日干し", "caption": "水彩、色鉛筆、マルチライナー"},
         ],
     },
     "北村明日香": {
@@ -89,8 +90,9 @@ authors = {
     },
     "高村咲弥花": {
         "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "images/red.jpg", "title": "DRIPPING:RED", "caption": "アクリル絵具"},
+            {"image": "images/blue.jpg", "title": "DRIPPING:BLUE", "caption": "アクリル絵具"},
+            {"image": "images/yellow.jpg", "title": "DRIPPING:YELLOW", "caption": "アクリル絵具"},
         ],
     },
     "鍛治美羽": {
@@ -107,7 +109,10 @@ authors = {
     },
     "梶田恵": {
         "works": [
+            {"image": "images/lazy.jpeg", "title": "ぐうたらだらだら", "caption": "B4パネル、アクリル絵の具"},
             {"image": "images/sight.jpg", "title": "視線の先に見える未来", "caption": "P15キャンバス　アクリル絵の具"},
+            {"image": "images/painter.jpeg", "title": "ぐうたらだらだら", "caption": "F8パネル、アクリル絵の具"},
+            {"image": "images/10.jpeg", "title": "あと10分だけ", "caption": "B4パネル、アクリル絵の具"},
         ],
         "instagram_url": "https://www.instagram.com/kei_kajita"
     },
@@ -147,20 +152,34 @@ authors = {
     },
     "山口音寧": {
         "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "images/foreign.jpeg", "title": "異国", "caption": ""},
+            {"image": "images/nostalgic.jpeg", "title": "nostalgic", "caption": ""},
+            {"image": "images/not_mine.jpeg", "title": "These are not mine.", "caption": ""},
+            {"image": "images/ceangal.jpeg", "title": "ceangal leis an am atá thart", "caption": ""},
+            {"image": "images/sky.jpeg", "title": "空色", "caption": ""},
+            {"image": "images/want.jpeg", "title": "収めたくなる景色", "caption": ""},
+            {"image": "images/staring-out.jpeg", "title": "にらめっこ", "caption": ""},
+            {"image": "images/un.jpeg", "title": "un paysage vu pour la première fois", "caption": ""},
         ],
     },
     "遠藤胡桃": {
         "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
-            {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+            {"image": "images/ssaw1.jpg", "title": "春夏秋冬", "caption": "canon x80"},
+            {"image": "images/ssaw2.jpg", "title": "春夏秋冬", "caption": "canon x80"},
+            {"image": "images/ssaw3.jpg", "title": "春夏秋冬", "caption": "canon x80"},
+            {"image": "images/ssaw4.jpg", "title": "春夏秋冬", "caption": "canon x80"},
+            {"image": "images/memory.png", "title": "記憶", "caption": "ここはキャプションです"},
         ],
     },
     "中西祥": {
         "works": [
-            {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
+            {"image": "images/castle.jpg", "title": "城", "caption": "フランス海岸松"},
             {"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+        ],
+    },
+    "りゅうのしん": {
+        "works": [
+            {"image": "images/kim.jpeg", "title": "KiM Presents 堀川武骨夜", "caption": "キャンバス、アクリルガッシュ"},
         ],
     },
 }
