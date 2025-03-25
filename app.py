@@ -210,6 +210,40 @@ def get_hourly_visit_counts(hours=24):
     # 結果を辞書形式に変換 (例: {'2023-10-27 10:00:00': 10, '2023-10-27 11:00:00': 5, ...})
     return {row['hour']: row[1] for row in hourly_counts}
 
+def get_weekly_visit_counts(weeks=4):
+    """
+    過去 `weeks` 週間分の週ごとの訪問者数を取得する。
+
+    Args:
+        weeks (int): 集計する週数。
+
+    Returns:
+        dict: 週の開始日をキー、訪問者数を値とする辞書。
+              例: {'2023-10-23': 15, '2023-10-30': 22, ...}
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # 現在の日付から指定された週数前の日付を計算
+    end_date = datetime.now()
+    start_date = end_date - timedelta(weeks=weeks * 7)
+
+    # 週の開始日 (月曜日) と訪問者数を取得するクエリ
+    cursor.execute("""
+        SELECT
+            strftime('%Y-%m-%d', date(visit_time, 'weekday 0', '-6 days')) AS week_start,
+            COUNT(DISTINCT visitor_id)  -- 重複を除いた訪問者数をカウント
+        FROM visits
+        WHERE visit_time BETWEEN ? AND ?
+        GROUP BY week_start
+        ORDER BY week_start
+    """, (start_date, end_date))
+
+    weekly_counts = cursor.fetchall()
+    conn.close()
+
+    # 結果を辞書形式に変換
+    return {row['week_start']: row[1] for row in weekly_counts}
 
 
 
@@ -228,13 +262,20 @@ def admin():
     labels_hourly = list(hourly_counts.keys())
     data_hourly = list(hourly_counts.values())
 
+        # 週ごとの訪問者数を取得
+    weekly_counts = get_weekly_visit_counts()
+    labels_weekly = list(weekly_counts.keys())
+    data_weekly = list(weekly_counts.values())
+
     return render_template(
         "admin.html",
         labels_author=labels_author,
         tap_counts=tap_counts,
         durations=durations,
         labels_hourly=labels_hourly,
-        data_hourly=data_hourly
+        data_hourly=data_hourly,
+        labels_weekly=labels_weekly,
+        data_weekly=data_weekly
     )
 
 @app.route("/log_exit/<author_name>/<int:work_id>", methods=['POST'])

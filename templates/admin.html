@@ -30,6 +30,11 @@
         <h2>過去24時間のアクセス数</h2>
         <canvas id="hourlyVisitsChart" width="400" height="200"></canvas>
       </section>
+
+      <section>
+        <h2>週ごとの訪問者数</h2>
+        <canvas id="weeklyChart" width="400" height="200"></canvas>
+      </section>
     </div>
 
     <script>
@@ -105,6 +110,34 @@
           }
         }
       });
+
+           // 週ごとの訪問者数グラフ (追加)
+           var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+        var weeklyChart = new Chart(ctxWeekly, {
+            type: 'bar',  // 棒グラフ
+            data: {
+                labels: {{ labels_weekly | safe }},  // 週の開始日
+                datasets: [{
+                    label: 'Weekly Visitors',
+                    data: {{ data_weekly | safe }},  // 週ごとの訪問者数
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // y軸の目盛りの間隔を整数にする
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
     </script>
   </body>
 </html>
