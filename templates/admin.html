@@ -89,27 +89,30 @@
       });
 
       // 時間別アクセス数グラフ
-      const ctx = document.getElementById('hourlyVisitsChart').getContext('2d');
-      const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: {{ labels_hourly | safe }},
-          datasets: [{
-            label: 'アクセス数',
-            data: {{ data_hourly | safe }},
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
+
+      <script>
+        const ctx = document.getElementById('hourlyVisitsChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: {{ labels_hourly | safe }},
+            datasets: [{
+              label: 'アクセス数',
+              data: {{ data_hourly | safe }},
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
             }
           }
-        }
-      });
+        });
+      </script>
 
            // 週ごとの訪問者数グラフ (追加)
            var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
