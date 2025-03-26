@@ -15,7 +15,7 @@ authors = {
     },
     "波多野ひなた": {
         "works": [
-            {"image": "", "title": "東京都中野区中野５丁目５２−１５ B1", "caption": "画用紙 アクリルガッシュ"},
+            {"image": "images/IMG_3508.JPG", "title": "東京都中野区中野５丁目５２−１５ B1", "caption": "画用紙 アクリルガッシュ"},
         ],
         "instagram_url": "https://www.instagram.com/ultra_happychan?igsh=bmhtZnN0M2hjNGVo&utm_source=qr",
         "twitter_url": "https://x.com/ultra_happychan?s=21&t=toYGO5301kXqijZqUquxQw",
@@ -29,7 +29,7 @@ authors = {
         ],
         "instagram_url": "https://www.instagram.com/oozzz_u_u?igsh=NGc2ejRtMDAzaTV5&utm_source=qr",
     },
-    "永井杏奈": {
+    "ネムニエル": {
         "works": [
             {"image": "images/2_blue.jpg", "title": "2人の秘密　真実を隠す子", "caption": "アクリルガッシュ"},
             {"image": "images/2_red.jpg", "title": "2人の秘密　誰かを待つ子", "caption": "アクリルガッシュ"},
@@ -126,13 +126,6 @@ authors = {
             {"image": "images/Angel.jpg", "title": "Angel", "caption": "水彩絵の具"},
         ],
     },
-    "青之": {
-        "works": [
-            {"image": "images/button.jpg", "title": "ボタン屋さん", "caption": "ここはキャプションです"},
-            #{"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
-        ],
-        "twitter_url": "https://x.com/oAo_931",
-    },
     # "五十嵐英奈": {
     #     "works": [
     #         {"image": "images/aaa.jpg", "title": "空", "caption": "ここはキャプションです"},
@@ -143,7 +136,7 @@ authors = {
     # },
     "波戸優希": {
         "works": [
-            {"image": "", "title": "メ・チャ・ミエール", "caption": "Photoshop/Illustrator"},
+            {"image": "images/IMG_3501.jpg", "title": "メ・チャ・ミエール", "caption": "Photoshop/Illustrator"},
         ],
         "instagram_url":"https://www.instagram.com/nihonbashi_ukiyo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
         "twitter_url": "https://twitter.com/ukiyo_the_world?s=21&t=FSOIvWDBn5zhbYz-SrY7zQ",
@@ -186,6 +179,13 @@ authors = {
             {"image": "images/collaboration_photo.jpg", "title": "実像", "caption": "lumix dmc-gf1 super takumar 55mm f1.8"},
             {"image": "images/collaboration_art.jpg", "title": "虚像", "caption": ""},
         ],
+    },
+    "青之&": {
+        "works": [
+            {"image": "images/button.jpg", "title": "ボタン屋さん", "caption": "ここはキャプションです"},
+            #{"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
+        ],
+        "twitter_url": "https://x.com/oAo_931",
     },
 }
 
