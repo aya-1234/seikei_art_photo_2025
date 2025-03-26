@@ -15,7 +15,7 @@ authors = {
     },
     "波多野ひなた": {
         "works": [
-            {"image": "images/IMG_3508.JPG", "title": "東京都中野区中野５丁目５２−１５ B1", "caption": "画用紙 アクリルガッシュ"},
+            {"image": "images/b2.jpg", "title": "東京都中野区中野５丁目５２−１５ B1", "caption": "画用紙 アクリルガッシュ"},
         ],
         "instagram_url": "https://www.instagram.com/ultra_happychan?igsh=bmhtZnN0M2hjNGVo&utm_source=qr",
         "twitter_url": "https://x.com/ultra_happychan?s=21&t=toYGO5301kXqijZqUquxQw",
