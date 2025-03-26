@@ -32,7 +32,7 @@ authors = {
     "永井杏奈": {
         "works": [
             {"image": "images/2_blue.jpg", "title": "2人の秘密　真実を隠す子", "caption": "アクリルガッシュ"},
-            {"image": "images/2_red.jpg", "title": "2人の秘密　真実を隠す子", "caption": "アクリルガッシュ"},
+            {"image": "images/2_red.jpg", "title": "2人の秘密　誰かを待つ‹子", "caption": "アクリルガッシュ"},
         ],
         "instagram_url": "https://www.instagram.com/nemunieru_724?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
@@ -108,8 +108,8 @@ authors = {
     "梶田恵": {
         "works": [
             {"image": "images/lazy.jpeg", "title": "ぐうたらだらだら", "caption": "B4パネル、アクリル絵の具"},
-            {"image": "images/sight.jpg", "title": "視線の先に見える未来", "caption": "P15キャンバス　アクリル絵の具"},
-            {"image": "images/painter.jpeg", "title": "ぐうたらだらだら", "caption": "F8パネル、アクリル絵の具"},
+            {"image": "images/sight.jpg", "title": "視線の先に", "caption": "P15キャンバス　アクリル絵の具"},
+            {"image": "images/painter.jpeg", "title": "私は画家よ", "caption": "F8パネル、アクリル絵の具"},
             {"image": "images/10.jpeg", "title": "あと10分だけ", "caption": "B4パネル、アクリル絵の具"},
         ],
         "instagram_url": "https://www.instagram.com/kei_kajita"
