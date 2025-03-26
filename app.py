@@ -190,13 +190,14 @@ def get_hourly_visit_counts(hours=24):
     conn = get_db_connection()
     cursor = conn.cursor()
 
+    # 現在時刻から指定された時間前の時刻を計算
     end_time = datetime.now()
     start_time = end_time - timedelta(hours=hours)
 
     cursor.execute("""
         SELECT
             strftime('%Y-%m-%d %H:00:00', tap_time) AS hour,
-            COUNT(*) AS count
+            COUNT(*)
         FROM visits
         WHERE tap_time BETWEEN ? AND ?
         GROUP BY hour
@@ -206,11 +207,8 @@ def get_hourly_visit_counts(hours=24):
     hourly_counts = cursor.fetchall()
     conn.close()
 
-    # データの整形
-    labels = [row['hour'] for row in hourly_counts]
-    data = [row['count'] for row in hourly_counts]
-
-    return labels, data
+    # 結果を辞書形式に変換 (例: {'2023-10-27 10:00:00': 10, '2023-10-27 11:00:00': 5, ...})
+    return {row['hour']: row[1] for row in hourly_counts}
 
 def get_weekly_visit_counts(weeks=4):
     """
