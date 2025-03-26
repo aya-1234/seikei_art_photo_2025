@@ -180,7 +180,7 @@ authors = {
             {"image": "images/collaboration_art.jpg", "title": "虚像", "caption": ""},
         ],
     },
-    "青之&": {
+    "青之&かろね": {
         "works": [
             {"image": "images/button.jpg", "title": "ボタン屋さん", "caption": "ここはキャプションです"},
             #{"image": "images/bbb.jpg", "title": "作品タイトル1-2", "caption": "ここはキャプションです"},
