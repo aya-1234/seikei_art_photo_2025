@@ -55,8 +55,8 @@ authors = {
     },
     "石川葵": {
         "works": [
-            {"image": "images/eat.jpeg", "title": "たくさん食べたい", "caption": "キャンバス、アクリルガッシュ"},
-            {"image": "images/ster.jpeg", "title": "星たちのディスコ", "caption": "キャンバス、アクリルガッシュ"},
+            {"image": "images/eat.jpeg", "title": "星たちのディスコ", "caption": "キャンバス、アクリルガッシュ"},
+            {"image": "images/ster.jpeg", "title": "たくさん食べたい", "caption": "キャンバス、アクリルガッシュ"},
         ],
     },
     "三宅梨菜": {
@@ -166,7 +166,8 @@ authors = {
             {"image": "images/ssaw2.jpg", "title": "春夏秋冬", "caption": "canon x80"},
             {"image": "images/ssaw3.jpeg", "title": "春夏秋冬", "caption": "canon x80"},
             {"image": "images/ssaw4.jpeg", "title": "春夏秋冬", "caption": "canon x80"},
-            {"image": "images/memory.png", "title": "記憶", "caption": "ここはキャプションです"},
+            {"image": "images/memory.png", "title": "記憶", "caption": "canon x80"},
+            {"image": "images/Summer_day.png", "title": "夏のあの日", "caption": "canon x80"},
         ],
     },
     "中西祥": {
