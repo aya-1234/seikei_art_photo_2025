@@ -304,7 +304,7 @@ def log_exit(author_name, work_id):
 
 # ルート: 作家一覧ページ
 @app.route("/")
-def index():
+def start():
     return render_template("start.html")
 
 @app.route("/top-art")
