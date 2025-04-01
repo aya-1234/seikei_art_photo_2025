@@ -305,19 +305,19 @@ def log_exit(author_name, work_id):
 # ルート: 作家一覧ページ
 @app.route("/")
 def index():
+    return render_template("start.html")
+
+@app.route("/top-art")
+def index():
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM authors")
     authors = [row["name"] for row in cursor.fetchall()]
     conn.close()
     return render_template("index.html", authors=authors)
-# 作家詳細ページ
-
-# 作家名をSHA256でハッシュ化し、作家詳細ページにリダイレクト
-
 
 # 作家詳細ページ (ハッシュ値を元に作家情報を取得)
-@app.route("/author/<author_name>")
+@app.route("/top-art/author/<author_name>")
 def author(author_name):  # パラメータ名を author_name に修正
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -333,7 +333,7 @@ def author(author_name):  # パラメータ名を author_name に修正
     return render_template("author.html", author=author_data, works=works)
 
 # 作家名と作品IDを使って作品詳細ページを表示する
-@app.route("/work/<author_name>/<int:work_id>")
+@app.route("/top-art/work/<author_name>/<int:work_id>")
 def work_by_name_and_id(author_name, work_id):
     visitor_id = get_visitor_id()
 
@@ -353,7 +353,7 @@ def work_by_name_and_id(author_name, work_id):
     # work.html に必要な情報を渡す
     return render_template("work.html", author=author, work=work)
 
-@app.route('/how_to_use')
+@app.route('/top-art/how_to_use')
 def how_to_use():
     return render_template('how_to_use.html')
 
